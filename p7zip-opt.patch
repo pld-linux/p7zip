@@ -1,13 +1,13 @@
-diff -ruN p7zip_4.12./makefile.linux_alpha p7zip_4.12/makefile.linux_alpha
---- p7zip_4.12./makefile.linux_alpha	2004-11-18 22:40:56.000000000 +0100
-+++ p7zip_4.12/makefile.linux_alpha	2004-11-26 18:03:14.269874176 +0100
+diff -burN p7zip_4.13.orig/makefile.linux_alpha p7zip_4.13/makefile.linux_alpha
+--- p7zip_4.13.orig/makefile.linux_alpha	2004-12-19 15:43:03.459275712 +0100
++++ p7zip_4.13/makefile.linux_alpha	2004-12-19 15:44:00.014677984 +0100
 @@ -1,12 +1,12 @@
  
+ # LITTLE_ENDIAN : already defined by /usr/include/endian.h, line 46
 -ALLFLAGS=-Wall -O2 -s -fPIC \
 +ALLFLAGS=-Wall -fPIC \
      	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
  	-DNDEBUG -D_REENTRANT -DENV_UNIX \
- 	-DLITTLE_ENDIAN \
  	$(LOCAL_FLAGS)
  
 -CXX=g++ $(ALLFLAGS)
@@ -16,10 +16,10 @@ diff -ruN p7zip_4.12./makefile.linux_alpha p7zip_4.12/makefile.linux_alpha
 +CC=$(_CC) $(ALLFLAGS)
  LINK_SHARED=-shared
  
- LOCAL_LIBS=-lpthread -ldl
-diff -ruN p7zip_4.12./makefile.linux_amd64 p7zip_4.12/makefile.linux_amd64
---- p7zip_4.12./makefile.linux_amd64	2004-11-18 22:18:53.000000000 +0100
-+++ p7zip_4.12/makefile.linux_amd64	2004-11-26 18:03:26.738978584 +0100
+ LOCAL_LIBS=-lpthread
+diff -burN p7zip_4.13.orig/makefile.linux_amd64 p7zip_4.13/makefile.linux_amd64
+--- p7zip_4.13.orig/makefile.linux_amd64	2004-12-19 15:43:03.554261272 +0100
++++ p7zip_4.13/makefile.linux_amd64	2004-12-19 15:44:28.153400248 +0100
 @@ -1,13 +1,13 @@
  
  # use "-m64" to have a 64bits executable
@@ -36,10 +36,10 @@ diff -ruN p7zip_4.12./makefile.linux_amd64 p7zip_4.12/makefile.linux_amd64
 +CC=$(_CC) $(ALLFLAGS)
  LINK_SHARED=-shared
  
- LOCAL_LIBS=-lpthread -ldl
-diff -ruN p7zip_4.12./makefile.linux_ppc p7zip_4.12/makefile.linux_ppc
---- p7zip_4.12./makefile.linux_ppc	2004-11-18 22:40:21.000000000 +0100
-+++ p7zip_4.12/makefile.linux_ppc	2004-11-26 18:03:37.666317376 +0100
+ LOCAL_LIBS=-lpthread
+diff -burN p7zip_4.13.orig/makefile.linux_ppc p7zip_4.13/makefile.linux_ppc
+--- p7zip_4.13.orig/makefile.linux_ppc	2004-12-19 15:43:03.456276168 +0100
++++ p7zip_4.13/makefile.linux_ppc	2004-12-19 15:44:46.329637040 +0100
 @@ -1,12 +1,12 @@
  
 -ALLFLAGS=-Wall -O2 -s -fPIC \
@@ -55,10 +55,10 @@ diff -ruN p7zip_4.12./makefile.linux_ppc p7zip_4.12/makefile.linux_ppc
 +CC=$(_CC) $(ALLFLAGS)
  LINK_SHARED=-shared
  
- LOCAL_LIBS=-lpthread -ldl
-diff -ruN p7zip_4.12./makefile.linux_x86 p7zip_4.12/makefile.linux_x86
---- p7zip_4.12./makefile.linux_x86	2004-11-18 22:11:20.000000000 +0100
-+++ p7zip_4.12/makefile.linux_x86	2004-11-26 18:03:57.308331336 +0100
+ LOCAL_LIBS=-lpthread
+diff -burN p7zip_4.13.orig/makefile.linux_x86 p7zip_4.13/makefile.linux_x86
+--- p7zip_4.13.orig/makefile.linux_x86	2004-12-19 15:43:03.554261272 +0100
++++ p7zip_4.13/makefile.linux_x86	2004-12-19 15:45:01.942263560 +0100
 @@ -1,12 +1,12 @@
  
 -ALLFLAGS=-Wall -O2 -s -fPIC \
@@ -74,4 +74,4 @@ diff -ruN p7zip_4.12./makefile.linux_x86 p7zip_4.12/makefile.linux_x86
 +CC=$(_CC) $(ALLFLAGS)
  LINK_SHARED=-shared
  
- LOCAL_LIBS=-lpthread -ldl
+ LOCAL_LIBS=-lpthread
