@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl):	Paker plików z najwy¿szym stopniem kompresji
 Name:		p7zip
-Version:	0.91
-Release:	2
+Version:	4.12
+Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}.tar.bz2
-# Source0-md5:	8c6a7b49f360917cbdd8391f3a926a19
+Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src.tar.bz2
+# Source0-md5:	82d4859d8e3b30a54ac5ad6a12b16e10
 Patch0:		%{name}-opt.patch
 URL:		http://sourceforge.net/projects/p7zip
 BuildRequires:	libstdc++-devel
@@ -55,24 +55,28 @@ wersja obs³uguj±ca wtyczki.
 %setup -q -n %{name}_%{version}
 %patch0 -p1
 
+# big vs little endian
+%ifarch ppc
+cp -f makefile.linux_ppc makefile.machine
+%else
+cp -f makefile.linux_x86 makefile.machine
+%endif
+
 cd 7zip/UI/Common
-sed -e "s@Formats@%{_libdir}/%{name}/&@" ArchiverInfo.cpp > tmp
-mv -f tmp ArchiverInfo.cpp
+sed -i -e "s@Formats@%{_libdir}/%{name}/&@" ArchiverInfo.cpp
 cd ../../Archive/Common
-sed -e "s@return GetBaseFolderPrefix() + TEXT(\"Codecs\\\\\\\\\");@return TEXT(\"%{_libdir}/%{name}/Codecs/\");@" CodecsPath.cpp > tmp
-mv -f tmp CodecsPath.cpp
+sed -i -e "s@return GetBaseFolderPrefix() + TEXT(\"Codecs\\\\\\\\\");@return TEXT(\"%{_libdir}/%{name}/Codecs/\");@" CodecsPath.cpp
 
 %build
-%{__make} \
-	CC_="%{__cc}" \
-	CXX_="%{__cxx}" \
-	OPTFLAGS="%{rpmcflags}"
+%{__make} all2 \
+	_CC="%{__cc} %{rpmcflags}" \
+	_CXX="%{__cxx} %{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats}}
 
-install bin/7z{,a} $RPM_BUILD_ROOT%{_bindir}
+install bin/7z* $RPM_BUILD_ROOT%{_bindir}
 install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
 install bin/Formats/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Formats
 
@@ -81,8 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc html ChangeLog README TODO
+%doc DOCS/{MANUAL,{7zFormat,Methods,history,lzma,readme}.txt} ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/7z
+%attr(755,root,root) %{_bindir}/7zCon.sfx
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Codecs
 %attr(755,root,root) %{_libdir}/%{name}/Codecs/*
