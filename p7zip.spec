@@ -1,14 +1,14 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl):	Paker plików z najwy¿szym stopniem kompresji
 Name:		p7zip
-Version:	4.13
-Release:	2
+Version:	4.14
+Release:	1
 License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src.tar.bz2
-# Source0-md5:	980cff8a3357d3ab47527e24ef143e10
+# Source0-md5:	1452c602c04547f0b96a100e9411258b
 Patch0:		%{name}-opt.patch
-URL:		http://sourceforge.net/projects/p7zip
+URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -29,14 +29,14 @@ The main features of 7z format:
 7-Zip jest pakerem plików z najwy¿szym stopniem kompresji.
 
 G³ówne cechy formatu 7z:
-- Otwarta architektura,
-- Wysoki stopieñ kompresji,
-- Silne kodowanie AES-256,
-- Mo¿liwo¶æ u¿ywania dowolnych metod kodowania, kompresji, konwersji,
-- Obs³uga bardzo du¿ych plików,
-- Obs³uga nazw plików w unikodzie,
-- Kompresja upakowana,
-- Kompresja nag³ówków archiwum.
+- otwarta architektura,
+- wysoki stopieñ kompresji,
+- silne kodowanie AES-256,
+- mo¿liwo¶æ u¿ywania dowolnych metod kodowania, kompresji, konwersji,
+- obs³uga bardzo du¿ych plików (powy¿ej 16000000000 GB),
+- obs³uga nazw plików w unikodzie,
+- kompresja upakowana,
+- kompresja nag³ówków archiwum.
 
 %package stand-alone
 Summary:	Stand-alone 7zip executable
@@ -48,7 +48,7 @@ Stand-alone version of 7zip. It handles less archive formats than
 plugin capable version.
 
 %description stand-alone -l pl
-Samodzielna wersja 7zip-a. Obs³uguje mniej formatów archiw ni¿
+Samodzielna wersja 7zip-a. Obs³uguje mniej formatów archiwów ni¿
 wersja obs³uguj±ca wtyczki.
 
 %prep
