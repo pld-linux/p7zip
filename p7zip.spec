@@ -63,10 +63,10 @@ cp -f makefile.linux_ppc makefile.machine
 cp -f makefile.linux_x86 makefile.machine
 %endif
 
-cd 7zip/UI/Common
-sed -i -e "s@Formats@%{_libdir}/%{name}/&@" ArchiverInfo.cpp
-cd ../../Archive/Common
-sed -i -e "s@return GetBaseFolderPrefix() + TEXT(\"Codecs\\\\\\\\\");@return TEXT(\"%{_libdir}/%{name}/Codecs/\");@" CodecsPath.cpp
+%{__sed} -i "s@Formats@%{_libdir}/%{name}/&@" \
+	7zip/UI/Common/ArchiverInfo.cpp
+%{__sed} -i 's,return GetBaseFolderPrefix.*,return TEXT("%{_libdir}/%{name}/Codecs/");,g' \
+	7zip/Archive/Common/CodecsPath.cpp
 
 %build
 %{__make} all2 \
