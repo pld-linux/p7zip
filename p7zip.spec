@@ -32,7 +32,7 @@ G³ówne cechy formatu 7z:
 - Otwarta architektura,
 - Wysoki stopieñ kompresji,
 - Silne kodowanie AES-256,
-- Mo¿liwo¶æ u¿ywania dowelnych metod kodowania, kompresji, konwersji,
+- Mo¿liwo¶æ u¿ywania dowolnych metod kodowania, kompresji, konwersji,
 - Obs³uga bardzo du¿ych plików,
 - Obs³uga nazw plików w unikodzie,
 - Kompresja upakowana,
