@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl):	Paker plików z najwy¿szym stopniem kompresji
 Name:		p7zip
-Version:	4.12
+Version:	4.13
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src.tar.bz2
-# Source0-md5:	82d4859d8e3b30a54ac5ad6a12b16e10
+# Source0-md5:	980cff8a3357d3ab47527e24ef143e10
 Patch0:		%{name}-opt.patch
 URL:		http://sourceforge.net/projects/p7zip
 BuildRequires:	libstdc++-devel
