@@ -1,0 +1,14 @@
+diff -ruN p7zip_0.90./makefile.glb p7zip_0.90/makefile.glb
+--- p7zip_0.90./makefile.glb	2004-07-14 22:46:54.000000000 +0200
++++ p7zip_0.90/makefile.glb	2004-07-31 23:20:24.506223504 +0200
+@@ -8,8 +8,8 @@
+ 	-I../../../include_windows \
+ 	-I../../../myWindows
+ 
+-CXX=g++ $(CPPFLAGS)
+-CC=gcc $(CPPFLAGS)
++CXX=$(CXX_) $(CPPFLAGS) $(OPTFLAGS)
++CC=$(CC_) $(CPPFLAGS) $(OPTFLAGS)
+ 
+ MY_HOME=../../../myWindows
+ 
