@@ -5,10 +5,10 @@ Version:	0.81
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://dl.sf.net/p7zip/%{name}_%{version}.tar.bz2
+Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}.tar.bz2
 # Source0-md5:	2a4f8e1c2ae8635cc98a0016f3fdb578
-BuildRequires:	XFree86-devel
 URL:		http://sourceforge.net/projects/p7zip
+BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
