@@ -1,14 +1,77 @@
-diff -ruN p7zip_0.90./makefile.glb p7zip_0.90/makefile.glb
---- p7zip_0.90./makefile.glb	2004-07-14 22:46:54.000000000 +0200
-+++ p7zip_0.90/makefile.glb	2004-07-31 23:20:24.506223504 +0200
-@@ -8,8 +8,8 @@
- 	-I../../../include_windows \
- 	-I../../../myWindows
+diff -ruN p7zip_4.12./makefile.linux_alpha p7zip_4.12/makefile.linux_alpha
+--- p7zip_4.12./makefile.linux_alpha	2004-11-18 22:40:56.000000000 +0100
++++ p7zip_4.12/makefile.linux_alpha	2004-11-26 18:03:14.269874176 +0100
+@@ -1,12 +1,12 @@
  
--CXX=g++ $(CPPFLAGS)
--CC=gcc $(CPPFLAGS)
-+CXX=$(CXX_) $(CPPFLAGS) $(OPTFLAGS)
-+CC=$(CC_) $(CPPFLAGS) $(OPTFLAGS)
+-ALLFLAGS=-Wall -O2 -s -fPIC \
++ALLFLAGS=-Wall -fPIC \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-DLITTLE_ENDIAN \
+ 	$(LOCAL_FLAGS)
  
- MY_HOME=../../../myWindows
+-CXX=g++ $(ALLFLAGS)
+-CC=gcc $(ALLFLAGS)
++CXX=$(_CXX) $(ALLFLAGS)
++CC=$(_CC) $(ALLFLAGS)
+ LINK_SHARED=-shared
  
+ LOCAL_LIBS=-lpthread -ldl
+diff -ruN p7zip_4.12./makefile.linux_amd64 p7zip_4.12/makefile.linux_amd64
+--- p7zip_4.12./makefile.linux_amd64	2004-11-18 22:18:53.000000000 +0100
++++ p7zip_4.12/makefile.linux_amd64	2004-11-26 18:03:26.738978584 +0100
+@@ -1,13 +1,13 @@
+ 
+ # use "-m64" to have a 64bits executable
+-ALLFLAGS=-m32 -w -O2 -s -fPIC \
++ALLFLAGS=-m32 -w -fPIC \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-DLITTLE_ENDIAN \
+ 	$(LOCAL_FLAGS)
+ 
+-CXX=g++ $(ALLFLAGS)
+-CC=gcc $(ALLFLAGS)
++CXX=$(_CXX) $(ALLFLAGS)
++CC=$(_CC) $(ALLFLAGS)
+ LINK_SHARED=-shared
+ 
+ LOCAL_LIBS=-lpthread -ldl
+diff -ruN p7zip_4.12./makefile.linux_ppc p7zip_4.12/makefile.linux_ppc
+--- p7zip_4.12./makefile.linux_ppc	2004-11-18 22:40:21.000000000 +0100
++++ p7zip_4.12/makefile.linux_ppc	2004-11-26 18:03:37.666317376 +0100
+@@ -1,12 +1,12 @@
+ 
+-ALLFLAGS=-Wall -O2 -s -fPIC \
++ALLFLAGS=-Wall -fPIC \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-DBIG_ENDIAN \
+ 	$(LOCAL_FLAGS)
+ 
+-CXX=g++ $(ALLFLAGS)
+-CC=gcc $(ALLFLAGS)
++CXX=$(_CXX) $(ALLFLAGS)
++CC=$(_CC) $(ALLFLAGS)
+ LINK_SHARED=-shared
+ 
+ LOCAL_LIBS=-lpthread -ldl
+diff -ruN p7zip_4.12./makefile.linux_x86 p7zip_4.12/makefile.linux_x86
+--- p7zip_4.12./makefile.linux_x86	2004-11-18 22:11:20.000000000 +0100
++++ p7zip_4.12/makefile.linux_x86	2004-11-26 18:03:57.308331336 +0100
+@@ -1,12 +1,12 @@
+ 
+-ALLFLAGS=-Wall -O2 -s -fPIC \
++ALLFLAGS=-Wall -fPIC \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-DLITTLE_ENDIAN \
+ 	$(LOCAL_FLAGS)
+ 
+-CXX=g++ $(ALLFLAGS)
+-CC=gcc $(ALLFLAGS)
++CXX=$(_CXX) $(ALLFLAGS)
++CC=$(_CC) $(ALLFLAGS)
+ LINK_SHARED=-shared
+ 
+ LOCAL_LIBS=-lpthread -ldl
