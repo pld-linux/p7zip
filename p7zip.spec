@@ -10,6 +10,7 @@ Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src.tar.bz2
 Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
