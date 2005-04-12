@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl):	Paker plików z najwy¿szym stopniem kompresji
 Name:		p7zip
-Version:	4.14.01
+Version:	4.16
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src.tar.bz2
-# Source0-md5:	1c67efe94aeafea962cb2f85db2b8d9c
+# Source0-md5:	e307fc7f145f3a62ac2cb9f484d58b0b
 Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
@@ -56,12 +56,7 @@ wersja obs³uguj±ca wtyczki.
 %setup -q -n %{name}_%{version}
 %patch0 -p1
 
-# big vs little endian
-%ifarch ppc
-cp -f makefile.linux_ppc makefile.machine
-%else
-cp -f makefile.linux_x86 makefile.machine
-%endif
+cp -f makefile.linux_x86_ppc_alpha makefile.machine
 
 %{__sed} -i "s@Formats@%{_libdir}/%{name}/&@" \
 	7zip/UI/Common/ArchiverInfo.cpp
@@ -75,11 +70,13 @@ cp -f makefile.linux_x86 makefile.machine
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats},%{_mandir}/man1}
 
 install bin/7z* $RPM_BUILD_ROOT%{_bindir}
 install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
 install bin/Formats/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Formats
+
+install man1/7z* $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,7 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/Codecs/*
 %dir %{_libdir}/%{name}/Formats
 %attr(755,root,root) %{_libdir}/%{name}/Formats/*
+%{_mandir}/man1/7z.*
 
 %files stand-alone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/7za
+%{_mandir}/man1/7za.*
