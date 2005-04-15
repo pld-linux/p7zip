@@ -66,7 +66,7 @@ cp -f makefile.linux_x86_ppc_alpha makefile.machine
 %build
 %{__make} all2 \
 	_CC="%{__cc} %{rpmcflags}" \
-	_CXX="%{__cxx} %{rpmcflags}"
+	_CXX="%{__cxx} %{rpmcxxflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
