@@ -39,16 +39,17 @@ G³ówne cechy formatu 7z:
 - kompresja upakowana,
 - kompresja nag³ówków archiwum.
 
-%package stand-alone
-Summary:	Stand-alone 7zip executable
+%package standalone
+Summary:	Standalone 7zip executable
 Summary(pl):	Samodzielny plik wykonywalny 7zip
 Group:		Applications/Archiving
+Obsoletes:	%{name}-stand-alone
 
-%description stand-alone
-Stand-alone version of 7zip. It handles less archive formats than
+%description standalone
+Standalone version of 7zip. It handles less archive formats than
 plugin capable version.
 
-%description stand-alone -l pl
+%description standalone -l pl
 Samodzielna wersja 7zip-a. Obs³uguje mniej formatów archiwów ni¿
 wersja obs³uguj±ca wtyczki.
 
@@ -93,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/Formats/*
 %{_mandir}/man1/7z.*
 
-%files stand-alone
+%files standalone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/7za
 %{_mandir}/man1/7za.*
