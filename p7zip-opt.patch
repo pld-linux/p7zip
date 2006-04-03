@@ -1,31 +1,55 @@
-diff -ruN p7zip_4.27./makefile.linux_amd64 p7zip_4.27/makefile.linux_amd64
---- p7zip_4.27./makefile.linux_amd64	2005-09-22 19:54:06.000000000 +0200
-+++ p7zip_4.27/makefile.linux_amd64	2005-09-23 12:02:21.880417000 +0200
-@@ -1,12 +1,12 @@
+diff -ruN p7zip_4.37./makefile.linux_amd64 p7zip_4.37/makefile.linux_amd64
+--- p7zip_4.37./makefile.linux_amd64	2006-04-03 17:36:01.000000000 +0200
++++ p7zip_4.37/makefile.linux_amd64	2006-04-03 17:37:11.154696736 +0200
+@@ -1,13 +1,13 @@
  
- # use "-m64" to have a 64bits executable
--ALLFLAGS=-m32 -w -O -s  -fPIC \
-+ALLFLAGS=-m32 -w -fPIC \
+ # use "-m32" to have a 32bits executable
+-ALLFLAGS=-m64 -w -O -s  -fPIC \
++ALLFLAGS=-m64 -w -fPIC \
      	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DHAVE_TIMEGM \
  	-DNDEBUG -D_REENTRANT -DENV_UNIX \
  	$(LOCAL_FLAGS)
  
 -CXX=g++ $(ALLFLAGS)
 -CC=gcc $(ALLFLAGS)
-+CXX=$(_CXX) $(ALLFLAGS)
-+CC=$(_CC) $(ALLFLAGS)
++CXX=${_CXX} $(ALLFLAGS)
++CC=${_CC} $(ALLFLAGS)
  LINK_SHARED=-shared
  
  LOCAL_LIBS=-lpthread
-diff -ruN p7zip_4.27./makefile.linux_x86_ppc_alpha p7zip_4.27/makefile.linux_x86_ppc_alpha
---- p7zip_4.27./makefile.linux_x86_ppc_alpha	2005-09-22 19:54:03.000000000 +0200
-+++ p7zip_4.27/makefile.linux_x86_ppc_alpha	2005-09-23 12:02:27.885788500 +0200
-@@ -2,13 +2,13 @@
+diff -ruN p7zip_4.37./makefile.linux_x86_ppc_alpha p7zip_4.37/makefile.linux_x86_ppc_alpha
+--- p7zip_4.37./makefile.linux_x86_ppc_alpha	2006-04-03 17:36:01.000000000 +0200
++++ p7zip_4.37/makefile.linux_x86_ppc_alpha	2006-04-03 17:37:37.136746864 +0200
+@@ -2,14 +2,14 @@
  # makefile for Linux (x86, PPC, alpha ...)
  # LITTLE_ENDIAN and BIG_ENDIAN are already defined by the system headers
  #
 -ALLFLAGS=-O1 -s -fPIC \
 +ALLFLAGS=-fPIC \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DHAVE_TIMEGM \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	$(LOCAL_FLAGS)
+ 
+-CXX=g++ $(ALLFLAGS)
+-CC=gcc $(ALLFLAGS)
++CXX=${_CXX} $(ALLFLAGS)
++CC=${_CC} $(ALLFLAGS)
+ LINK_SHARED=-shared
+ 
+ LOCAL_LIBS=-lpthread
+diff -ruN p7zip_4.37./makefile.linux_x86_ppc_alpha__gcc_4.X p7zip_4.37/makefile.linux_x86_ppc_alpha__gcc_4.X
+--- p7zip_4.37./makefile.linux_x86_ppc_alpha__gcc_4.X	2006-03-31 19:03:44.000000000 +0200
++++ p7zip_4.37/makefile.linux_x86_ppc_alpha__gcc_4.X	2006-04-03 17:40:33.933869616 +0200
+@@ -2,15 +2,15 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ # LITTLE_ENDIAN and BIG_ENDIAN are already defined by the system headers
+ #
+-ALLFLAGS=-O1 -s -fPIC \
++ALLFLAGS=-fPIC \
+ 	-DHAVE_GCCVISIBILITYPATCH -fvisibility=hidden -fvisibility-inlines-hidden \
+ 	-DHAVE_TIMEGM \
      	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
  	-DNDEBUG -D_REENTRANT -DENV_UNIX \
  	$(LOCAL_FLAGS)
