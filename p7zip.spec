@@ -5,7 +5,7 @@ Version:	4.39
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
-Source0:	http://heanet.dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
+Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
 # Source0-md5:	0e2e2d16fc48836093c47a04ac4b25ac
 Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
@@ -63,6 +63,9 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 	7zip/UI/Common/ArchiverInfo.cpp
 %{__sed} -i 's,return GetBaseFolderPrefix.*,return TEXT("%{_libdir}/%{name}/Codecs/");,g' \
 	7zip/Archive/Common/CodecsPath.cpp
+
+# fix invalid timestamps, obsolete after 2006-04-19
+find -type f | xargs touch
 
 %build
 %{__make} all2 \
