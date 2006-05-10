@@ -64,9 +64,6 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 %{__sed} -i 's,return GetBaseFolderPrefix.*,return TEXT("%{_libdir}/%{name}/Codecs/");,g' \
 	7zip/Archive/Common/CodecsPath.cpp
 
-# fix invalid timestamps, obsolete after 2006-04-19
-find -type f | xargs touch
-
 %build
 %{__make} all2 \
 	_CC="%{__cc} %{rpmcflags}" \
