@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl):	Paker plików z najwy¿szym stopniem kompresji
 Name:		p7zip
-Version:	4.39
+Version:	4.42
 Release:	1
 License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	0e2e2d16fc48836093c47a04ac4b25ac
+# Source0-md5:	a5475fdfdde39dd3f8dae20efc479cb9
 Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel >= 5:4.0
@@ -55,7 +55,7 @@ wersja obs³uguj±ca wtyczki.
 
 %prep
 %setup -q -n %{name}_%{version}
-%patch0 -p1
+#%patch0 -p1
 
 cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 
@@ -66,8 +66,7 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 
 %build
 %{__make} all2 \
-	_CC="%{__cc} %{rpmcflags}" \
-	_CXX="%{__cxx} %{rpmcxxflags}"
+	OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
