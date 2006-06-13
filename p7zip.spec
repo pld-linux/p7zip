@@ -7,7 +7,6 @@ License:	LGPL
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
 # Source0-md5:	a5475fdfdde39dd3f8dae20efc479cb9
-Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel >= 5:4.0
 BuildRequires:	sed >= 4.0
@@ -55,9 +54,9 @@ wersja obs³uguj±ca wtyczki.
 
 %prep
 %setup -q -n %{name}_%{version}
-#%patch0 -p1
 
 cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
+%{__sed} -i -e 's/ -s / /' makefile.machine
 
 %{__sed} -i "s@Formats@%{_libdir}/%{name}/&@" \
 	7zip/UI/Common/ArchiverInfo.cpp
@@ -66,6 +65,8 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 
 %build
 %{__make} all2 \
+	CC="%{__cc} \$(ALLFLAGS)" \
+	CXX="%{__cxx} \$(ALLFLAGS)" \
 	OPTFLAGS="%{rpmcflags}"
 
 %install
