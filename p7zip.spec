@@ -67,6 +67,7 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 %{__make} all2 \
 	CC="%{__cc} \$(ALLFLAGS)" \
 	CXX="%{__cxx} \$(ALLFLAGS)" \
+	LDFLAGS="%{rpmldflags}" \
 	OPTFLAGS="%{rpmcflags}"
 
 %install
