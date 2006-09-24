@@ -64,7 +64,7 @@ cp -f makefile.linux_x86_ppc_alpha__gcc_4.X makefile.machine
 	7zip/Archive/Common/CodecsPath.cpp
 
 %build
-%{__make} all2 \
+%{__make} all2 test \
 	CC="%{__cc} \$(ALLFLAGS)" \
 	CXX="%{__cxx} \$(ALLFLAGS)" \
 	LDFLAGS="%{rpmldflags}" \
