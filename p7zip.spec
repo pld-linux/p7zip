@@ -1,5 +1,5 @@
 Summary:	File archiver with highest compression ratio
-Summary(pl.UTF-8):   Paker plików z najwyższym stopniem kompresji
+Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
 Version:	4.44
 Release:	1
@@ -40,7 +40,7 @@ Główne cechy formatu 7z:
 
 %package standalone
 Summary:	Standalone 7zip executable
-Summary(pl.UTF-8):   Samodzielny plik wykonywalny 7zip
+Summary(pl.UTF-8):	Samodzielny plik wykonywalny 7zip
 Group:		Applications/Archiving
 Obsoletes:	p7zip-stand-alone
 
