@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
-Version:	4.47
+Version:	4.48
 Release:	1
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	76f486aa882638f1c259cd8d810adf6c
+# Source0-md5:	4e41eb39aa0e866228db65cedfbbb845
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel >= 5:4.0
 BuildRequires:	sed >= 4.0
@@ -82,16 +82,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc DOCS/{MANUAL,{7zFormat,Methods,history,lzma,readme}.txt} ChangeLog README TODO
+%doc DOCS/{MANUAL,{7zFormat,License,Methods,history,lzma,readme}.txt} ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/7z
 %attr(755,root,root) %{_bindir}/7zCon.sfx
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/7z.so
 %dir %{_libdir}/%{name}/Codecs
 %attr(755,root,root) %{_libdir}/%{name}/Codecs/*
-%{_mandir}/man1/7z.*
+%{_mandir}/man1/7z.1*
 
 %files standalone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/7za
-%{_mandir}/man1/7za.*
+%{_mandir}/man1/7za.1*
