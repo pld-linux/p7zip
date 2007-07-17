@@ -38,23 +38,24 @@ diff -ruN p7zip_4.39./makefile.linux_x86_ppc_alpha p7zip_4.39/makefile.linux_x86
  
  LOCAL_LIBS=-lpthread
 diff -ruN p7zip_4.39./makefile.linux_x86_ppc_alpha__gcc_4.X p7zip_4.39/makefile.linux_x86_ppc_alpha__gcc_4.X
---- p7zip_4.39./makefile.linux_x86_ppc_alpha__gcc_4.X	2006-04-15 13:16:07.000000000 +0200
-+++ p7zip_4.39/makefile.linux_x86_ppc_alpha__gcc_4.X	2006-04-15 13:16:58.236176024 +0200
-@@ -2,14 +2,14 @@
- # makefile for Linux (x86, PPC, alpha ...)
- # LITTLE_ENDIAN and BIG_ENDIAN are already defined by the system headers
- #
--ALLFLAGS=-O1 -s -fPIC \
+diff -ur p7zip_4.49/makefile.linux_x86_ppc_alpha_gcc_4.X p7zip_4.49.new/makefile.linux_x86_ppc_alpha_gcc_4.X
+--- p7zip_4.49/makefile.linux_x86_ppc_alpha_gcc_4.X	2007-06-28 09:33:43.000000000 +0200
++++ p7zip_4.49.new/makefile.linux_x86_ppc_alpha_gcc_4.X	2007-07-17 20:52:04.928378213 +0200
+@@ -5,13 +5,14 @@
+ 
+ OPTFLAGS=-O
+ 
+-ALLFLAGS=${OPTFLAGS} -s \
+-    	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
 +ALLFLAGS=-fPIC \
- 	-DHAVE_GCCVISIBILITYPATCH -fvisibility=hidden -fvisibility-inlines-hidden \
-     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
++	-DHAVE_GCCVISIBILITYPATCH -fvisibility=hidden -fvisibility-inlines-hidden \
++	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
  	-DNDEBUG -D_REENTRANT -DENV_UNIX \
  	$(LOCAL_FLAGS)
  
--CXX=g++ $(ALLFLAGS)
+-CXX=g++ $(ALLFLAGS) -DHAVE_GCCVISIBILITYPATCH -fvisibility=hidden -fvisibility-inlines-hidden
 -CC=gcc $(ALLFLAGS)
-+CXX=$(_CXX) $(ALLFLAGS)
-+CC=$(_CC) $(ALLFLAGS)
- LINK_SHARED=-shared
- 
- LOCAL_LIBS=-lpthread
++CXX=$(_CXX) $(ALLFLAGS) -DHAVE_GCCVISIBILITYPATCH -fvisibility=hidden -fvisibility-inlines-hidden
++CC=$(_CC} $(ALLFLAGS)
+ CC_SHARED=-fPIC
+ LINK_SHARED=-fPIC -shared
