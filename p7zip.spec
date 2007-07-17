@@ -1,13 +1,15 @@
+# TODO:
+# - please update patch
 Summary:	File archiver with highest compression ratio
-Summary(pl):	Paker plikÛw z najwyøszym stopniem kompresji
+Summary(pl.UTF-8):	Paker plik√≥w z najwy≈ºszym stopniem kompresji
 Name:		p7zip
-Version:	4.39
-Release:	1
-License:	LGPL
+Version:	4.48
+Release:	0.1
+License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	0e2e2d16fc48836093c47a04ac4b25ac
-Patch0:		%{name}-opt.patch
+# Source0-md5:	4e41eb39aa0e866228db65cedfbbb845
+#Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
@@ -26,22 +28,22 @@ The main features of 7z format:
 - Solid compressing
 - Archive headers compressing
 
-%description -l pl
-7-Zip jest pakerem plikÛw z najwyøszym stopniem kompresji.
+%description -l pl.UTF-8
+7-Zip jest pakerem plik√≥w z najwy≈ºszym stopniem kompresji.
 
-G≥Ûwne cechy formatu 7z:
+G≈Ç√≥wne cechy formatu 7z:
 - otwarta architektura,
-- wysoki stopieÒ kompresji,
+- wysoki stopie≈Ñ kompresji,
 - silne kodowanie AES-256,
-- moøliwo∂Ê uøywania dowolnych metod kodowania, kompresji, konwersji,
-- obs≥uga bardzo duøych plikÛw (powyøej 16000000000 GB),
-- obs≥uga nazw plikÛw w unikodzie,
+- mo≈ºliwo≈õƒá u≈ºywania dowolnych metod kodowania, kompresji, konwersji,
+- obs≈Çuga bardzo du≈ºych plik√≥w (powy≈ºej 16000000000 GB),
+- obs≈Çuga nazw plik√≥w w unikodzie,
 - kompresja upakowana,
-- kompresja nag≥ÛwkÛw archiwum.
+- kompresja nag≈Ç√≥wk√≥w archiwum.
 
 %package standalone
 Summary:	Standalone 7zip executable
-Summary(pl):	Samodzielny plik wykonywalny 7zip
+Summary(pl.UTF-8):	Samodzielny plik wykonywalny 7zip
 Group:		Applications/Archiving
 Obsoletes:	p7zip-stand-alone
 
@@ -49,33 +51,33 @@ Obsoletes:	p7zip-stand-alone
 Standalone version of 7zip. It handles less archive formats than
 plugin capable version.
 
-%description standalone -l pl
-Samodzielna wersja 7zip-a. Obs≥uguje mniej formatÛw archiwÛw niø
-wersja obs≥uguj±ca wtyczki.
+%description standalone -l pl.UTF-8
+Samodzielna wersja 7zip-a. Obs≈Çuguje mniej format√≥w archiw√≥w ni≈º
+wersja obs≈ÇugujƒÖca wtyczki.
 
 %prep
 %setup -q -n %{name}_%{version}
-%patch0 -p1
+#%patch0 -p1
 
-cp -f makefile.linux_x86_ppc_alpha makefile.machine
+cp -f makefile.linux_x86_ppc_alpha_gcc_4.X makefile.machine
+%{__sed} -i -e 's/ -s / /' makefile.machine
 
-%{__sed} -i "s@Formats@%{_libdir}/%{name}/&@" \
-	7zip/UI/Common/ArchiverInfo.cpp
-%{__sed} -i 's,return GetBaseFolderPrefix.*,return TEXT("%{_libdir}/%{name}/Codecs/");,g' \
-	7zip/Archive/Common/CodecsPath.cpp
+find . -name '*.cpp' -exec sed -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir}/%{name}/"@g' {} \;
 
 %build
-%{__make} all2 \
-	_CC="%{__cc} %{rpmcflags}" \
-	_CXX="%{__cxx} %{rpmcxxflags}"
+%{__make} all2 test \
+	CC="%{__cc} \$(ALLFLAGS)" \
+	CXX="%{__cxx} \$(ALLFLAGS)" \
+	LDFLAGS="%{rpmldflags}" \
+	OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats},%{_mandir}/man1}
 
-install bin/7z* $RPM_BUILD_ROOT%{_bindir}
+install bin/{7z,7zCon.sfx,7za} $RPM_BUILD_ROOT%{_bindir}
+install bin/7z.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
-install bin/Formats/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Formats
 
 install man1/7z* $RPM_BUILD_ROOT%{_mandir}/man1
 
@@ -84,17 +86,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc DOCS/{MANUAL,{7zFormat,Methods,history,lzma,readme}.txt} ChangeLog README TODO
+%doc DOCS/{MANUAL,{7zFormat,License,Methods,history,lzma,readme}.txt} ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/7z
 %attr(755,root,root) %{_bindir}/7zCon.sfx
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/7z.so
 %dir %{_libdir}/%{name}/Codecs
 %attr(755,root,root) %{_libdir}/%{name}/Codecs/*
-%dir %{_libdir}/%{name}/Formats
-%attr(755,root,root) %{_libdir}/%{name}/Formats/*
-%{_mandir}/man1/7z.*
+%{_mandir}/man1/7z.1*
 
 %files standalone
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/7za
-%{_mandir}/man1/7za.*
+%{_mandir}/man1/7za.1*
