@@ -9,7 +9,7 @@ License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
 # Source0-md5:	42a375ae0efde22d924ab4e1cff1d286
-Patch0:		%{name}-opt.patch
+#Patch0:		%{name}-opt.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
