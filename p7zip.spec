@@ -57,7 +57,7 @@ wersja obsługująca wtyczki.
 cp -f makefile.linux_x86_ppc_alpha_gcc_4.X makefile.machine
 %{__sed} -i -e 's/ -s / /' makefile.machine
 
-find . -name '*.cpp' -exec sed -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir}/%{name}/"@g' {} \;
+find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir}/%{name}/"@g' {} \;
 
 %build
 %{__make} all2 test \
