@@ -8,6 +8,7 @@ Group:		Applications/Archiving
 Source0:	http://dl.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
 # Source0-md5:	9194ebf9a2b3735d236aed001de5f6f8
 URL:		http://p7zip.sourceforge.net/
+BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,7 +65,7 @@ find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir
 	CC="%{__cc} \$(ALLFLAGS)" \
 	CXX="%{__cxx} \$(ALLFLAGS)" \
 	LDFLAGS="%{rpmldflags}" \
-	OPTFLAGS="%{rpmcflags}"
+	OPTFLAGS="%{rpmcxxflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
