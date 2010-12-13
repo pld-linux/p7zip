@@ -1,11 +1,8 @@
-#
-# TODO: - fails on make test
-#
 Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
 Version:	9.13
-Release:	0.1
+Release:	1
 License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
@@ -75,9 +72,10 @@ find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats},%{_mandir}/man1}
 
-install bin/{7z,7zCon.sfx,7za} $RPM_BUILD_ROOT%{_bindir}
+install bin/{7z,7za} $RPM_BUILD_ROOT%{_bindir}
 install bin/7z.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
+install bin/7zCon.sfx $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 install man1/7z* $RPM_BUILD_ROOT%{_mandir}/man1
 
@@ -88,8 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc DOCS/{MANUAL,{7zFormat,License,Methods,history,lzma,readme}.txt} ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/7z
-%attr(755,root,root) %{_bindir}/7zCon.sfx
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/7zCon.sfx
 %attr(755,root,root) %{_libdir}/%{name}/7z.so
 %dir %{_libdir}/%{name}/Codecs
 %attr(755,root,root) %{_libdir}/%{name}/Codecs/*
