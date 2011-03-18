@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
-Version:	9.13
+Version:	9.20.1
 Release:	1
 License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	8ddb5053db3b1f2696407d01be145779
+# Source0-md5:	bd6caaea567dc0d995c990c5cc883c89
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
@@ -55,7 +55,6 @@ wersja obsługująca wtyczki.
 %prep
 %setup -q -n %{name}_%{version}
 
-cp -f makefile.linux_x86_ppc_alpha_gcc_4.X makefile.machine
 %{__sed} -i -e 's/ -s / /' makefile.machine
 
 find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir}/%{name}/"@g' {} \;
