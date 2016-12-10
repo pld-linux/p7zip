@@ -1,12 +1,12 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
-Version:	9.20.1
-Release:	3
+Version:	16.02
+Release:	1
 License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	bd6caaea567dc0d995c990c5cc883c89
+# Source0-md5:	a0128d661cfe7cc8c121e73519c54fbf
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
@@ -76,14 +76,17 @@ install bin/7z.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
 install bin/7zCon.sfx $RPM_BUILD_ROOT%{_libdir}/%{name}
 
-install man1/7z* $RPM_BUILD_ROOT%{_mandir}/man1
+install man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+# 7zr is not packaged (subset of 7za functionality)
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/7zr.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc DOCS/{MANUAL,{7zFormat,License,Methods,history,lzma,readme}.txt} ChangeLog README TODO
+%doc DOC/{MANUAL,{7zFormat,License,Methods,lzma,readme,src-history}.txt} ChangeLog README TODO
+# devel: %doc DOC/7zC.txt
 %attr(755,root,root) %{_bindir}/7z
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/7zCon.sfx
