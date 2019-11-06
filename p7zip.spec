@@ -2,11 +2,16 @@ Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
 Version:	16.02
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Applications/Archiving
 Source0:	http://downloads.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
 # Source0-md5:	a0128d661cfe7cc8c121e73519c54fbf
+Patch0:		05-hardening-flags.patch
+Patch1:		14-Fix-g++-warning.patch
+Patch2:		CVE-2016-9296.patch
+Patch3:		CVE-2017-17969.patch
+Patch4:		gcc10-conversion.patch
 URL:		http://p7zip.sourceforge.net/
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
@@ -54,6 +59,11 @@ wersja obsługująca wtyczki.
 
 %prep
 %setup -q -n %{name}_%{version}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %{__sed} -i -e 's/ -s / /' makefile.machine
 
@@ -64,6 +74,7 @@ find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir
 %{__make} all2 \
 	CC="%{__cc} \$(ALLFLAGS)" \
 	CXX="%{__cxx} \$(ALLFLAGS)" \
+	CPPFLAGS="%{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	OPTFLAGS="%{rpmcxxflags}"
 
