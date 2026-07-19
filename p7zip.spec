@@ -1,20 +1,19 @@
 Summary:	File archiver with highest compression ratio
 Summary(pl.UTF-8):	Paker plików z najwyższym stopniem kompresji
 Name:		p7zip
-Version:	16.02
-Release:	3
-License:	LGPL v2.1+
+Version:	26.02
+Release:	1
+License:	LGPL v2.1+ with unRAR restriction (RAR decoder), BSD (Lzfse, Zstd, Xxh64)
 Group:		Applications/Archiving
-Source0:	http://downloads.sourceforge.net/p7zip/%{name}_%{version}_src_all.tar.bz2
-# Source0-md5:	a0128d661cfe7cc8c121e73519c54fbf
-Patch0:		05-hardening-flags.patch
-Patch1:		14-Fix-g++-warning.patch
-Patch2:		CVE-2016-9296.patch
-Patch3:		CVE-2017-17969.patch
-Patch4:		gcc10-conversion.patch
-URL:		http://p7zip.sourceforge.net/
+#Source0Download: https://github.com/ip7z/7zip/releases
+Source0:	https://github.com/ip7z/7zip/archive/%{version}/7zip-%{version}.tar.gz
+# Source0-md5:	29f692dc18d150acbbd31a86e3ffe610
+# upstream ships no manual pages; these are from Debian's 7zip packaging (LGPL v2.1+)
+Source1:	7z.1
+Source2:	7zz.1
+Patch0:		%{name}-sfx-module-dir.patch
+URL:		https://7-zip.org/
 BuildRequires:	libstdc++-devel
-BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -50,61 +49,53 @@ Group:		Applications/Archiving
 Obsoletes:	p7zip-stand-alone
 
 %description standalone
-Standalone version of 7zip. It handles less archive formats than
-plugin capable version.
+Standalone version of 7zip. It handles less archive formats than the
+full version.
 
 %description standalone -l pl.UTF-8
-Samodzielna wersja 7zip-a. Obsługuje mniej formatów archiwów niż
-wersja obsługująca wtyczki.
+Samodzielna wersja 7zip-a. Obsługuje mniej formatów archiwów niż wersja
+pełna.
 
 %prep
-%setup -q -n %{name}_%{version}
+%setup -q -n 7zip-%{version}
 %patch -P0 -p1
-%patch -P1 -p1
-%patch -P2 -p1
-%patch -P3 -p1
-%patch -P4 -p1
-
-%{__sed} -i -e 's/ -s / /' makefile.machine
-
-find . -name '*.cpp' -exec %{__sed} -i -e 's@getenv("P7ZIP_HOME_DIR")@"%{_libdir}/%{name}/"@g' {} \;
 
 %build
-#%%{__make} all2 test \
-%{__make} all2 \
-	CC="%{__cc} \$(ALLFLAGS)" \
-	CXX="%{__cxx} \$(ALLFLAGS)" \
-	CPPFLAGS="%{rpmcppflags}" \
-	LDFLAGS="%{rpmldflags}" \
-	OPTFLAGS="%{rpmcxxflags}"
+# LOCAL_FLAGS is not a usable hook - every bundle sets it to its own defines
+# (-DZ7_SFX etc.); CFLAGS_BASE2/CXXFLAGS_BASE2 are unused by upstream.
+# LFLAGS_STRIP= keeps upstream's -s away from the link so debuginfo survives.
+%define		buildflags	CFLAGS_BASE2="%{rpmcppflags} %{rpmcflags}" CXXFLAGS_BASE2="%{rpmcppflags} %{rpmcxxflags} -DZ7_SFX_MODULE_DIR='\\"%{_libdir}/%{name}/\\"'" LDFLAGS_STATIC_3="%{rpmldflags}" LFLAGS_STRIP= -f makefile.gcc
+
+%{__make} -C CPP/7zip/Bundles/Alone2 %{buildflags}
+%{__make} -C CPP/7zip/Bundles/Alone %{buildflags}
+%{__make} -C CPP/7zip/Bundles/SFXCon %{buildflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name}/{Codecs,Formats},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name},%{_mandir}/man1}
 
-install bin/{7z,7za} $RPM_BUILD_ROOT%{_bindir}
-install bin/7z.so $RPM_BUILD_ROOT%{_libdir}/%{name}
-install bin/Codecs/* $RPM_BUILD_ROOT%{_libdir}/%{name}/Codecs
-install bin/7zCon.sfx $RPM_BUILD_ROOT%{_libdir}/%{name}
+install -p CPP/7zip/Bundles/Alone2/_o/7zz $RPM_BUILD_ROOT%{_bindir}/7zz
+install -p CPP/7zip/Bundles/Alone/_o/7za $RPM_BUILD_ROOT%{_bindir}/7za
+ln -sf 7zz $RPM_BUILD_ROOT%{_bindir}/7z
+install -p CPP/7zip/Bundles/SFXCon/_o/7zCon $RPM_BUILD_ROOT%{_libdir}/%{name}/7zCon.sfx
 
-install man1/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
-# 7zr is not packaged (subset of 7za functionality)
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/7zr.1
+cp -p %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man1
+# Debian ships 7za.1 as a ".so man1/7z.1" redirect, which dangles when
+# -standalone is installed without the main package
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man1/7za.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc DOC/{MANUAL,{7zFormat,License,Methods,lzma,readme,src-history}.txt} ChangeLog README TODO
-# devel: %doc DOC/7zC.txt
+%doc DOC/{7zFormat,License,Methods,lzma,readme,src-history,unRarLicense}.txt
 %attr(755,root,root) %{_bindir}/7z
+%attr(755,root,root) %{_bindir}/7zz
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/7zCon.sfx
-%attr(755,root,root) %{_libdir}/%{name}/7z.so
-%dir %{_libdir}/%{name}/Codecs
-%attr(755,root,root) %{_libdir}/%{name}/Codecs/*
 %{_mandir}/man1/7z.1*
+%{_mandir}/man1/7zz.1*
 
 %files standalone
 %defattr(644,root,root,755)

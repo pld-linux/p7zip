@@ -1,0 +1,15 @@
+--- a/CPP/7zip/UI/Common/Update.cpp
++++ b/CPP/7zip/UI/Common/Update.cpp
+@@ -1177,7 +1177,12 @@
+     bool found = false;
+     if (options.SfxModule.Find(FCHAR_PATH_SEPARATOR) < 0)
+     {
++      // SFX modules live in a fixed data dir, not next to the executable (FHS)
++#ifdef Z7_SFX_MODULE_DIR
++      const FString fullName = FString(Z7_SFX_MODULE_DIR) + options.SfxModule;
++#else
+       const FString fullName = NDLL::GetModuleDirPrefix() + options.SfxModule;
++#endif
+       if (NFind::DoesFileExist_FollowLink(fullName))
+       {
+         options.SfxModule = fullName;
