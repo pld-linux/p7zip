@@ -46,15 +46,15 @@ Główne cechy formatu 7z:
 Summary:	Standalone 7zip executable
 Summary(pl.UTF-8):	Samodzielny plik wykonywalny 7zip
 Group:		Applications/Archiving
-Obsoletes:	p7zip-stand-alone
+Obsoletes:	p7zip-stand-alone < 4.29-2
 
 %description standalone
 Standalone version of 7zip. It handles less archive formats than the
 full version.
 
 %description standalone -l pl.UTF-8
-Samodzielna wersja 7zip-a. Obsługuje mniej formatów archiwów niż wersja
-pełna.
+Samodzielna wersja 7zip-a. Obsługuje mniej formatów archiwów niż
+wersja pełna.
 
 %prep
 %setup -q -n 7zip-%{version}
